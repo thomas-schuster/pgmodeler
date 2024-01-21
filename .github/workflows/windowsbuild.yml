@@ -49,3 +49,15 @@ jobs:
      
     - name: Deploying pgModeler
       run: mingw32-make install
+
+    - name: Create Zip Archive
+      run: |
+        cd $GITHUB_WORKSPACE;
+        zip -r pgmodeler_win.zip ${{ env.PREFIX }}
+      shell: bash
+
+    - name: Upload release artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: pgmodeler
+        path: $GITHUB_WORKSPACE/pgmodeler_win.zip
