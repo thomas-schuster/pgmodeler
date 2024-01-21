@@ -1,31 +1,20 @@
 name: Linux build
 
 on:
-  push:
-    branches: [ main, develop, 1.* ]
-    tags: 1.*
-    
-  pull_request:
-    branches: [ main, develop, 1.* ]
-
   workflow_dispatch:
     branches: [ develop ]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        qt: ['6.2.4', '6.3.2', '6.4.3', '6.5.1']
-
+    
     steps:
     - uses: actions/checkout@v2
       
     - name: Installing Qt framework
       uses: jurplel/install-qt-action@v3
       with:
-        version: ${{ matrix.qt }}      
+        version: '6.5.1'      
 
     - name: Running qmake
       run:  cd $GITHUB_WORKSPACE; qmake pgmodeler.pro -r PREFIX=$GITHUB_WORKSPACE/build CONFIG+=debug
